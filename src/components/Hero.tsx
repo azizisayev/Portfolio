@@ -25,7 +25,7 @@ export function Hero() {
     <section id="ust" className="relative min-h-svh overflow-hidden">
       <HeroBackground />
 
-      <div className="relative z-10 mx-auto flex min-h-svh max-w-6xl items-center px-5 pb-36 pt-28 md:px-8 md:pb-16">
+      <div className="relative z-10 mx-auto flex min-h-svh max-w-6xl items-center px-5 pb-40 pt-28 md:px-8 md:pb-16">
         <div className="relative max-w-2xl">
           <motion.p
             key={`greet-${locale}`}

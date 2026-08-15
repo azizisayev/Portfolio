@@ -80,8 +80,8 @@ export function HeroProjectPreviews() {
     .filter((item) => Boolean(item.src))
 
   return (
-    <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 flex justify-center px-4 pb-5 md:inset-x-auto md:bottom-10 md:right-6 md:justify-end md:px-0 lg:right-10 xl:right-[max(2.5rem,calc((100vw-72rem)/2))]">
-      <div className="pointer-events-auto flex items-end gap-2 sm:gap-3 md:-space-x-6 md:gap-0 lg:-space-x-8">
+    <div className="pointer-events-none absolute inset-x-0 bottom-16 z-20 flex justify-center px-4 md:inset-y-0 md:bottom-auto md:right-6 md:left-auto md:items-center md:justify-end md:px-0 lg:right-10 xl:right-[max(2.5rem,calc((100vw-72rem)/2))]">
+      <div className="pointer-events-auto flex items-end gap-2 sm:gap-3 md:-translate-y-6 md:-space-x-6 md:gap-0 lg:-translate-y-8 lg:-space-x-8">
         {previews.map((preview, index) => (
           <MiniPhone
             key={preview.id}
