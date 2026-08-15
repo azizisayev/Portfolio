@@ -1,6 +1,6 @@
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { useEffect, useState } from 'react'
+import { memo, useCallback, useEffect, useRef, useState } from 'react'
 import { getProjectCopy, projects, type Project } from '../data/projects'
 import { useLocale } from '../i18n/locale-context'
 import { getUi } from '../i18n/ui'
@@ -38,8 +38,43 @@ function FeatureBlock({ title, items }: { title: string; items: string[] }) {
   )
 }
 
+interface ShotThumbProps {
+  src: string
+  alt: string
+  index: number
+  isActive: boolean
+  onSelect: (index: number) => void
+}
+
 /**
- * Gerçekçi iPhone (Natural Titanium) çerçevesi + alt navigasyon.
+ * Küçük screenshot önizleme butonu (memo).
+ */
+const ShotThumb = memo(function ShotThumb({
+  src,
+  alt,
+  index,
+  isActive,
+  onSelect,
+}: ShotThumbProps) {
+  return (
+    <button
+      type="button"
+      onClick={() => onSelect(index)}
+      aria-label={alt}
+      aria-current={isActive ? 'true' : undefined}
+      className={`relative h-14 w-9 shrink-0 overflow-hidden rounded-lg border-2 transition sm:h-16 sm:w-10 ${
+        isActive
+          ? 'border-teal shadow-[0_0_0_2px_rgb(0_171_240_/_0.35)]'
+          : 'border-teal/20 opacity-70 hover:border-teal/50 hover:opacity-100'
+      }`}
+    >
+      <img src={src} alt="" className="h-full w-full object-cover object-top" loading="lazy" />
+    </button>
+  )
+})
+
+/**
+ * Gerçekçi iPhone (Natural Titanium) çerçevesi + üst thumb şeridi + alt navigasyon.
  */
 function PhoneCarousel({
   title,
@@ -50,11 +85,23 @@ function PhoneCarousel({
   nextLabel,
 }: PhoneCarouselProps) {
   const [activeShot, setActiveShot] = useState(0)
+  const thumbsRef = useRef<HTMLDivElement>(null)
   const total = screenshots.length
 
   useEffect(() => {
     setActiveShot(0)
   }, [screenshots])
+
+  useEffect(() => {
+    const rail = thumbsRef.current
+    if (!rail) return
+    const active = rail.querySelector<HTMLElement>('[aria-current="true"]')
+    active?.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' })
+  }, [activeShot])
+
+  const selectShot = useCallback((index: number) => {
+    setActiveShot(index)
+  }, [])
 
   function goPrev() {
     setActiveShot((prev) => (prev - 1 + total) % total)
@@ -70,6 +117,24 @@ function PhoneCarousel({
         className="absolute -inset-8 rounded-[3.5rem] opacity-35 blur-3xl"
         style={{ background: accent }}
       />
+
+      <div
+        ref={thumbsRef}
+        className="relative z-10 mb-4 flex w-full max-w-[280px] gap-2 overflow-x-auto px-1 pb-1 [-ms-overflow-style:none] [scrollbar-width:none] sm:max-w-[300px] [&::-webkit-scrollbar]:hidden"
+        role="listbox"
+        aria-label={`${title} ${screenshotLabel}`}
+      >
+        {screenshots.map((src, index) => (
+          <ShotThumb
+            key={src}
+            src={src}
+            alt={`${title} ${screenshotLabel} ${index + 1}`}
+            index={index}
+            isActive={index === activeShot}
+            onSelect={selectShot}
+          />
+        ))}
+      </div>
 
       <div className="relative z-10 w-full">
         {/* Action / volume / power — titanium */}
