@@ -12,6 +12,21 @@ dist
 dist-ssr
 *.local
 
+# Secrets / credentials — never commit
+.env
+.env.*
+!.env.example
+*.pem
+*.p8
+*.p12
+*.key
+*credentials*.json
+*firebase*adminsdk*.json
+*serviceAccount*.json
+AuthKey*.p8
+secrets/
+.secrets/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

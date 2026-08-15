@@ -2,7 +2,7 @@
 
 Modern, responsive kişisel portfolyo sitesi. React + TypeScript + Tailwind + Framer Motion ile yazıldı. GitHub Pages üzerinde yayınlanır.
 
-**Canlı site:** https://programmer8-p.github.io/Portfolio/
+**Canlı site:** https://azizisayev.github.io/Portfolio/
 
 ## Kurulum
 

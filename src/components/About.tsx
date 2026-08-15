@@ -1,11 +1,14 @@
 import { motion } from 'framer-motion'
 import { profile } from '../data/profile'
+import { useLocale } from '../i18n/locale-context'
+import { getUi } from '../i18n/ui'
 
 const skills = [
   'TypeScript',
   'React',
   'React Native',
   'Expo',
+  'Supabase',
   'Tailwind CSS',
   'Node.js',
   'Zod',
@@ -16,6 +19,9 @@ const skills = [
  * Hakkımda bölümü.
  */
 export function About() {
+  const { locale } = useLocale()
+  const ui = getUi(locale)
+
   return (
     <section id="hakkimda" className="scroll-mt-24 py-20 md:py-28">
       <div className="mx-auto grid max-w-6xl gap-12 px-5 md:grid-cols-[1.1fr_0.9fr] md:px-8 lg:gap-20">
@@ -24,13 +30,13 @@ export function About() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
         >
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-teal-deep">
-            Hakkımda
+          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-teal">
+            {ui.aboutEyebrow}
           </p>
           <h2 className="mt-3 font-display text-4xl font-bold tracking-tight text-ink md:text-5xl">
-            Ürün odaklı geliştirme
+            {ui.aboutTitle}
           </h2>
-          <p className="mt-5 text-lg leading-relaxed text-muted">{profile.bio}</p>
+          <p className="mt-5 text-lg leading-relaxed text-muted">{ui.aboutBio}</p>
           <p className="mt-4 text-sm font-medium text-ink-soft">{profile.location}</p>
         </motion.div>
 
@@ -39,14 +45,14 @@ export function About() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.1 }}
-          className="rounded-[1.75rem] border border-ink/5 bg-white/70 p-8 shadow-soft backdrop-blur"
+          className="rounded-[1.75rem] border border-teal/25 bg-mist/70 p-8 shadow-soft backdrop-blur"
         >
-          <h3 className="font-display text-xl font-bold text-ink">Yetenekler</h3>
+          <h3 className="font-display text-xl font-bold text-ink">{ui.skills}</h3>
           <ul className="mt-6 flex flex-wrap gap-2.5">
             {skills.map((skill) => (
               <li
                 key={skill}
-                className="rounded-xl bg-mist px-3.5 py-2 text-sm font-semibold text-ink-soft"
+                className="rounded-lg border border-teal/30 bg-foam/60 px-3.5 py-2 text-sm font-semibold text-ink-soft"
               >
                 {skill}
               </li>
