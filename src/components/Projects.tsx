@@ -96,8 +96,25 @@ function PhoneCarousel({
     const rail = thumbsRef.current
     if (!rail) return
     const active = rail.querySelector<HTMLElement>('[aria-current="true"]')
-    active?.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' })
+    if (!active) return
+    const left = active.offsetLeft - rail.clientWidth / 2 + active.offsetWidth / 2
+    rail.scrollTo({ left, behavior: 'smooth' })
   }, [activeShot])
+
+  useEffect(() => {
+    const node = thumbsRef.current
+    if (!(node instanceof HTMLElement)) return
+    const el: HTMLElement = node
+
+    function onWheel(event: WheelEvent) {
+      if (Math.abs(event.deltaY) <= Math.abs(event.deltaX)) return
+      event.preventDefault()
+      el.scrollLeft += event.deltaY
+    }
+
+    el.addEventListener('wheel', onWheel, { passive: false })
+    return () => el.removeEventListener('wheel', onWheel)
+  }, [])
 
   const selectShot = useCallback((index: number) => {
     setActiveShot(index)
@@ -114,13 +131,13 @@ function PhoneCarousel({
   return (
     <div className="relative mx-auto flex w-full max-w-[300px] flex-col items-center sm:max-w-[320px]">
       <div
-        className="absolute -inset-8 rounded-[3.5rem] opacity-35 blur-3xl"
+        className="pointer-events-none absolute -inset-8 rounded-[3.5rem] opacity-35 blur-3xl"
         style={{ background: accent }}
       />
 
       <div
         ref={thumbsRef}
-        className="relative z-10 mb-4 flex w-full max-w-[280px] gap-2 overflow-x-auto px-1 pb-1 [-ms-overflow-style:none] [scrollbar-width:none] sm:max-w-[300px] [&::-webkit-scrollbar]:hidden"
+        className="thumb-rail relative z-10 mb-4 flex w-full touch-pan-x gap-2 overflow-x-auto overflow-y-hidden overscroll-x-contain px-1 pb-2 pt-0.5"
         role="listbox"
         aria-label={`${title} ${screenshotLabel}`}
       >

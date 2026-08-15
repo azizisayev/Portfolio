@@ -85,4 +85,24 @@
       animation: none;
     }
   }
+
+  .thumb-rail {
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: rgb(0 171 240 / 0.55) rgb(14 47 72 / 0.8);
+  }
+
+  .thumb-rail::-webkit-scrollbar {
+    height: 5px;
+  }
+
+  .thumb-rail::-webkit-scrollbar-track {
+    border-radius: 999px;
+    background: rgb(14 47 72 / 0.8);
+  }
+
+  .thumb-rail::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+    background: rgb(0 171 240 / 0.55);
+  }
 }
