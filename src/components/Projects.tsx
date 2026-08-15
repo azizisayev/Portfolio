@@ -85,6 +85,11 @@ function PhoneCarousel({
   nextLabel,
 }: PhoneCarouselProps) {
   const [activeShot, setActiveShot] = useState(0)
+  const [scrollMetrics, setScrollMetrics] = useState({
+    progress: 0,
+    thumbRatio: 1,
+    canScroll: false,
+  })
   const thumbsRef = useRef<HTMLDivElement>(null)
   const total = screenshots.length
 
@@ -106,15 +111,34 @@ function PhoneCarousel({
     if (!(node instanceof HTMLElement)) return
     const el: HTMLElement = node
 
+    function syncScrollMetrics() {
+      const max = el.scrollWidth - el.clientWidth
+      const canScroll = max > 4
+      const thumbRatio = canScroll ? Math.min(1, el.clientWidth / el.scrollWidth) : 1
+      const progress = canScroll ? el.scrollLeft / max : 0
+      setScrollMetrics({ progress, thumbRatio, canScroll })
+    }
+
     function onWheel(event: WheelEvent) {
       if (Math.abs(event.deltaY) <= Math.abs(event.deltaX)) return
       event.preventDefault()
       el.scrollLeft += event.deltaY
     }
 
+    syncScrollMetrics()
+    el.addEventListener('scroll', syncScrollMetrics, { passive: true })
     el.addEventListener('wheel', onWheel, { passive: false })
-    return () => el.removeEventListener('wheel', onWheel)
-  }, [])
+    window.addEventListener('resize', syncScrollMetrics)
+    const resizeObserver = new ResizeObserver(syncScrollMetrics)
+    resizeObserver.observe(el)
+
+    return () => {
+      el.removeEventListener('scroll', syncScrollMetrics)
+      el.removeEventListener('wheel', onWheel)
+      window.removeEventListener('resize', syncScrollMetrics)
+      resizeObserver.disconnect()
+    }
+  }, [screenshots])
 
   const selectShot = useCallback((index: number) => {
     setActiveShot(index)
@@ -128,6 +152,10 @@ function PhoneCarousel({
     setActiveShot((prev) => (prev + 1) % total)
   }
 
+  const thumbWidthPercent = Math.max(18, scrollMetrics.thumbRatio * 100)
+  const thumbTravel = 100 - thumbWidthPercent
+  const thumbOffsetPercent = scrollMetrics.progress * thumbTravel
+
   return (
     <div className="relative mx-auto flex w-full max-w-[300px] flex-col items-center sm:max-w-[320px]">
       <div
@@ -135,22 +163,39 @@ function PhoneCarousel({
         style={{ background: accent }}
       />
 
-      <div
-        ref={thumbsRef}
-        className="thumb-rail relative z-10 mb-4 flex w-full touch-pan-x gap-2 overflow-x-auto overflow-y-hidden overscroll-x-contain px-1 pb-2 pt-0.5"
-        role="listbox"
-        aria-label={`${title} ${screenshotLabel}`}
-      >
-        {screenshots.map((src, index) => (
-          <ShotThumb
-            key={src}
-            src={src}
-            alt={`${title} ${screenshotLabel} ${index + 1}`}
-            index={index}
-            isActive={index === activeShot}
-            onSelect={selectShot}
+      <div className="relative z-10 mb-4 w-full">
+        <div
+          ref={thumbsRef}
+          className="thumb-rail flex w-full touch-pan-x gap-2 overflow-x-auto overflow-y-hidden overscroll-x-contain px-1 pb-1 pt-0.5"
+          role="listbox"
+          aria-label={`${title} ${screenshotLabel}`}
+        >
+          {screenshots.map((src, index) => (
+            <ShotThumb
+              key={src}
+              src={src}
+              alt={`${title} ${screenshotLabel} ${index + 1}`}
+              index={index}
+              isActive={index === activeShot}
+              onSelect={selectShot}
+            />
+          ))}
+        </div>
+
+        <div
+          className={`mx-auto mt-2.5 h-1 w-[72%] overflow-hidden rounded-full bg-teal/15 transition-opacity duration-300 ${
+            scrollMetrics.canScroll ? 'opacity-100' : 'opacity-0'
+          }`}
+          aria-hidden
+        >
+          <div
+            className="h-full rounded-full bg-gradient-to-r from-teal/70 via-coral to-teal shadow-[0_0_10px_rgb(0_171_240_/_0.55)] transition-[margin,width] duration-150 ease-out"
+            style={{
+              width: `${thumbWidthPercent}%`,
+              marginLeft: `${thumbOffsetPercent}%`,
+            }}
           />
-        ))}
+        </div>
       </div>
 
       <div className="relative z-10 w-full">
