@@ -94,4 +94,14 @@
   .thumb-rail::-webkit-scrollbar {
     display: none;
   }
+
+  .mini-phone-frame {
+    box-shadow: 0 18px 40px -16px rgb(0 0 0 / 0.75);
+  }
+
+  .group:hover .mini-phone-frame {
+    box-shadow:
+      0 22px 44px -14px rgb(0 0 0 / 0.8),
+      0 0 28px 2px color-mix(in srgb, var(--phone-accent) 42%, transparent);
+  }
 }
