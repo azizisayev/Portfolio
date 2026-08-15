@@ -22,17 +22,9 @@ interface PhoneCarouselProps {
 /**
  * Özellik listesi bloğu.
  */
-function FeatureBlock({
-  title,
-  items,
-  className = 'mt-5',
-}: {
-  title: string
-  items: string[]
-  className?: string
-}) {
+function FeatureBlock({ title, items }: { title: string; items: string[] }) {
   return (
-    <div className={className}>
+    <div className="mt-5">
       <h4 className="text-sm font-bold uppercase tracking-[0.14em] text-ink-soft">{title}</h4>
       <ul className="mt-2 space-y-1.5">
         {items.map((item) => (
@@ -266,11 +258,7 @@ function ProjectCard({ project, index }: ProjectCardProps) {
   const copy = getProjectCopy(project, locale)
   const isReversed = index % 2 === 1
   const isGalata = project.id === 'galata'
-  const hasProductBlocks =
-    Boolean(copy.guestFeatures) ||
-    Boolean(copy.staffFeatures) ||
-    Boolean(copy.highlights) ||
-    Boolean(copy.features)
+  const showHighlightsUnderPhoto = isGalata && Boolean(copy.highlights?.length)
 
   return (
     <motion.article
@@ -278,13 +266,11 @@ function ProjectCard({ project, index }: ProjectCardProps) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-80px' }}
       transition={{ duration: 0.55, delay: index * 0.06 }}
-      className="flex flex-col gap-10"
+      className={`grid items-start gap-10 lg:grid-cols-2 lg:gap-14 ${
+        isReversed ? 'lg:[&>*:first-child]:order-2' : ''
+      }`}
     >
-      <div
-        className={`grid items-start gap-10 lg:grid-cols-2 lg:gap-14 ${
-          isReversed ? 'lg:[&>*:first-child]:order-2' : ''
-        }`}
-      >
+      <div className="flex flex-col gap-6">
         <PhoneCarousel
           title={project.title}
           screenshots={project.screenshots}
@@ -294,66 +280,68 @@ function ProjectCard({ project, index }: ProjectCardProps) {
           nextLabel={ui.next}
         />
 
-        <div>
-          <p className="mb-2 text-xs font-bold uppercase tracking-[0.2em] text-muted">
-            {project.featured ? ui.featured : ui.project}
-          </p>
-          <h3 className="font-display text-3xl font-bold tracking-tight text-ink md:text-4xl">
-            {project.title}
-          </h3>
-          <p className="mt-3 text-lg font-medium text-teal">{copy.tagline}</p>
-          <p className="mt-4 text-base leading-relaxed text-muted">{copy.blurb}</p>
-
-          <ul className="mt-5 flex flex-wrap gap-2">
-            {copy.cardBullets.map((bullet) => (
-              <li
-                key={bullet}
-                className="rounded-lg border border-teal/25 bg-sand px-3 py-1.5 text-xs font-semibold text-ink-soft"
-              >
-                {bullet}
-              </li>
-            ))}
-          </ul>
-
-          <ul className="mt-4 flex flex-wrap gap-2">
-            {project.tags.map((tag) => (
-              <li
-                key={tag}
-                className="rounded-lg border border-teal/40 px-3 py-1.5 text-xs font-semibold text-teal"
-              >
-                {tag}
-              </li>
-            ))}
-          </ul>
-
-          {!isGalata && copy.features ? (
-            <FeatureBlock title={ui.features} items={copy.features} />
-          ) : null}
-          {!isGalata && copy.guestFeatures ? (
-            <FeatureBlock title={ui.guestFeatures} items={copy.guestFeatures} />
-          ) : null}
-          {!isGalata && copy.staffFeatures ? (
-            <FeatureBlock title={ui.staffFeatures} items={copy.staffFeatures} />
-          ) : null}
-          {!isGalata && copy.highlights ? (
-            <FeatureBlock title={ui.highlights} items={copy.highlights} />
-          ) : null}
-        </div>
+        {showHighlightsUnderPhoto ? (
+          <div className="mx-auto w-full max-w-[300px] sm:max-w-[320px]">
+            <h4 className="text-sm font-bold uppercase tracking-[0.14em] text-ink-soft">
+              {ui.highlights}
+            </h4>
+            <ul className="mt-3 space-y-2">
+              {copy.highlights!.map((item) => (
+                <li
+                  key={item}
+                  className="rounded-xl border border-teal/20 bg-mist/50 px-3 py-2 text-sm leading-relaxed text-muted"
+                >
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : null}
       </div>
 
-      {isGalata && hasProductBlocks ? (
-        <div className="grid gap-6 rounded-[1.5rem] border border-teal/20 bg-mist/40 p-6 md:grid-cols-3 md:gap-8 md:p-8">
-          {copy.guestFeatures ? (
-            <FeatureBlock title={ui.guestFeatures} items={copy.guestFeatures} className="mt-0" />
-          ) : null}
-          {copy.staffFeatures ? (
-            <FeatureBlock title={ui.staffFeatures} items={copy.staffFeatures} className="mt-0" />
-          ) : null}
-          {copy.highlights ? (
-            <FeatureBlock title={ui.highlights} items={copy.highlights} className="mt-0" />
-          ) : null}
-        </div>
-      ) : null}
+      <div>
+        <p className="mb-2 text-xs font-bold uppercase tracking-[0.2em] text-muted">
+          {project.featured ? ui.featured : ui.project}
+        </p>
+        <h3 className="font-display text-3xl font-bold tracking-tight text-ink md:text-4xl">
+          {project.title}
+        </h3>
+        <p className="mt-3 text-lg font-medium text-teal">{copy.tagline}</p>
+        <p className="mt-4 text-base leading-relaxed text-muted">{copy.blurb}</p>
+
+        <ul className="mt-5 flex flex-wrap gap-2">
+          {copy.cardBullets.map((bullet) => (
+            <li
+              key={bullet}
+              className="rounded-lg border border-teal/25 bg-sand px-3 py-1.5 text-xs font-semibold text-ink-soft"
+            >
+              {bullet}
+            </li>
+          ))}
+        </ul>
+
+        <ul className="mt-4 flex flex-wrap gap-2">
+          {project.tags.map((tag) => (
+            <li
+              key={tag}
+              className="rounded-lg border border-teal/40 px-3 py-1.5 text-xs font-semibold text-teal"
+            >
+              {tag}
+            </li>
+          ))}
+        </ul>
+
+        {copy.guestFeatures ? (
+          <FeatureBlock title={ui.guestFeatures} items={copy.guestFeatures} />
+        ) : null}
+        {copy.staffFeatures ? (
+          <FeatureBlock title={ui.staffFeatures} items={copy.staffFeatures} />
+        ) : null}
+        {copy.features ? <FeatureBlock title={ui.features} items={copy.features} /> : null}
+        {!showHighlightsUnderPhoto && copy.highlights ? (
+          <FeatureBlock title={ui.highlights} items={copy.highlights} />
+        ) : null}
+      </div>
     </motion.article>
   )
 }
