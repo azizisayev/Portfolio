@@ -1,0 +1,48 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-display: 'Syne', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Figtree', ui-sans-serif, system-ui, sans-serif;
+
+  --color-ink: #07111f;
+  --color-ink-soft: #1a2a3d;
+  --color-mist: #eef6f4;
+  --color-foam: #f7fbfa;
+  --color-teal: #0d9f8c;
+  --color-teal-deep: #087a6c;
+  --color-coral: #ff5a3c;
+  --color-sand: #d4e8e3;
+  --color-muted: #5a6b7a;
+
+  --shadow-soft: 0 20px 50px -20px rgb(7 17 31 / 0.18);
+  --shadow-lift: 0 28px 60px -24px rgb(13 159 140 / 0.35);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply m-0 min-h-svh bg-foam font-sans text-ink antialiased;
+    background-image:
+      radial-gradient(ellipse 80% 50% at 10% -10%, rgb(13 159 140 / 0.18), transparent),
+      radial-gradient(ellipse 60% 40% at 90% 0%, rgb(255 90 60 / 0.1), transparent),
+      radial-gradient(ellipse 50% 30% at 50% 100%, rgb(13 159 140 / 0.08), transparent);
+    background-attachment: fixed;
+  }
+
+  ::selection {
+    @apply bg-teal/25 text-ink;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .grain {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  }
+}
