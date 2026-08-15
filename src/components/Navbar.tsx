@@ -58,14 +58,6 @@ export function Navbar() {
             </a>
           ))}
           <LanguageSwitcher />
-          <a
-            href={profile.socials.github}
-            target="_blank"
-            rel="noreferrer"
-            className="rounded-lg border-2 border-teal px-4 py-1.5 text-sm font-semibold text-teal transition hover:bg-teal hover:text-foam"
-          >
-            GitHub
-          </a>
         </div>
 
         <div className="flex items-center gap-2 md:hidden">

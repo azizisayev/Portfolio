@@ -31,7 +31,6 @@ export const profile = {
   } satisfies PhoneParts,
   location: 'Azerbaycan',
   socials: {
-    github: 'https://github.com/azizisayev',
     linkedin: 'https://linkedin.com/in/',
   },
 } as const

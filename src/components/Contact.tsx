@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { Code2, Link2 } from 'lucide-react'
+import { Link2 } from 'lucide-react'
 import { profile } from '../data/profile'
 import { useLocale } from '../i18n/locale-context'
 import { getUi } from '../i18n/ui'
@@ -37,15 +37,6 @@ export function Contact() {
             <div className="mt-10 flex flex-wrap gap-3">
               <ProtectedEmailButton emailParts={profile.emailParts} />
               <ContactChannels phoneParts={profile.phoneParts} />
-              <a
-                href={profile.socials.github}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-2 rounded-lg border-2 border-teal/50 bg-transparent px-5 py-3 text-sm font-semibold text-teal transition hover:bg-teal hover:text-foam"
-              >
-                <Code2 size={18} />
-                GitHub
-              </a>
               <a
                 href={profile.socials.linkedin}
                 target="_blank"

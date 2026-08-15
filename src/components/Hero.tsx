@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { Code2, Link2, Mail, MessageCircle } from 'lucide-react'
+import { Link2, Mail, MessageCircle } from 'lucide-react'
 import { buildEmailAddress, buildWhatsAppUrl, profile } from '../data/profile'
 import { useLocale } from '../i18n/locale-context'
 import { getUi } from '../i18n/ui'
@@ -84,15 +84,6 @@ export function Hero() {
             transition={{ duration: 0.4, delay: 0.38 }}
             className="mt-10 flex flex-wrap gap-3"
           >
-            <a
-              href={profile.socials.github}
-              target="_blank"
-              rel="noreferrer"
-              aria-label="GitHub"
-              className={iconBtnClass}
-            >
-              <Code2 size={18} />
-            </a>
             <a
               href={buildWhatsAppUrl(profile.phoneParts)}
               target="_blank"
