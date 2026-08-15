@@ -1,10 +1,4 @@
-import {
-  motion,
-  useMotionValue,
-  useReducedMotion,
-  useSpring,
-  useTransform,
-} from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import { useEffect, useMemo, useState } from 'react'
 
 interface FloatingDot {
@@ -152,25 +146,6 @@ export function HeroBackground() {
     return [...leftDots, ...rightDots]
   }, [isMobile, prefersReducedMotion])
 
-  const mx = useMotionValue(72)
-  const my = useMotionValue(42)
-  const sx = useSpring(mx, { stiffness: 45, damping: 22 })
-  const sy = useSpring(my, { stiffness: 45, damping: 22 })
-  const left = useTransform(sx, (value) => `${value}%`)
-  const top = useTransform(sy, (value) => `${value}%`)
-
-  useEffect(() => {
-    if (prefersReducedMotion || isMobile) return undefined
-
-    function onMove(event: MouseEvent) {
-      mx.set((event.clientX / window.innerWidth) * 100)
-      my.set((event.clientY / window.innerHeight) * 100)
-    }
-
-    window.addEventListener('mousemove', onMove, { passive: true })
-    return () => window.removeEventListener('mousemove', onMove)
-  }, [isMobile, mx, my, prefersReducedMotion])
-
   return (
     <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
       <motion.div
@@ -303,18 +278,6 @@ export function HeroBackground() {
         }
         transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut' }}
       />
-
-      {!isMobile && !prefersReducedMotion ? (
-        <motion.div
-          className="absolute h-[46vw] w-[46vw] max-h-[560px] max-w-[560px] -translate-x-1/2 -translate-y-1/2 rounded-full"
-          style={{
-            left,
-            top,
-            background:
-              'radial-gradient(circle, rgb(0 171 240 / 0.32) 0%, rgb(0 171 240 / 0.1) 42%, transparent 70%)',
-          }}
-        />
-      ) : null}
 
       <div className="absolute inset-0 bg-gradient-to-r from-foam via-foam/75 to-foam/20" />
       <div className="absolute inset-0 bg-gradient-to-t from-foam via-transparent to-foam/45" />
