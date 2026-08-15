@@ -1,6 +1,6 @@
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { memo, useCallback, useEffect, useRef, useState } from 'react'
+import { memo, useCallback, useEffect, useRef, useState, type PointerEvent } from 'react'
 import { getProjectCopy, projects, type Project } from '../data/projects'
 import { useLocale } from '../i18n/locale-context'
 import { getUi } from '../i18n/ui'
@@ -91,6 +91,8 @@ function PhoneCarousel({
     canScroll: false,
   })
   const thumbsRef = useRef<HTMLDivElement>(null)
+  const scrubRef = useRef<HTMLDivElement>(null)
+  const isScrubbingRef = useRef(false)
   const total = screenshots.length
 
   useEffect(() => {
@@ -99,7 +101,7 @@ function PhoneCarousel({
 
   useEffect(() => {
     const rail = thumbsRef.current
-    if (!rail) return
+    if (!rail || isScrubbingRef.current) return
     const active = rail.querySelector<HTMLElement>('[aria-current="true"]')
     if (!active) return
     const left = active.offsetLeft - rail.clientWidth / 2 + active.offsetWidth / 2
@@ -144,6 +146,44 @@ function PhoneCarousel({
     setActiveShot(index)
   }, [])
 
+  const scrubToClientX = useCallback((clientX: number) => {
+    const rail = thumbsRef.current
+    const track = scrubRef.current
+    if (!rail || !track) return
+
+    const max = rail.scrollWidth - rail.clientWidth
+    if (max <= 0) return
+
+    const rect = track.getBoundingClientRect()
+    const ratio = Math.min(1, Math.max(0, (clientX - rect.left) / rect.width))
+    const thumbRatio = Math.min(1, rail.clientWidth / rail.scrollWidth)
+    const thumbWidth = Math.max(0.18, thumbRatio)
+    const travel = 1 - thumbWidth
+    // Map click position so grabbing center of pill feels natural
+    const progress = travel > 0 ? Math.min(1, Math.max(0, (ratio - thumbWidth / 2) / travel)) : 0
+    rail.scrollLeft = progress * max
+  }, [])
+
+  function onScrubPointerDown(event: PointerEvent<HTMLDivElement>) {
+    if (!scrollMetrics.canScroll) return
+    isScrubbingRef.current = true
+    event.currentTarget.setPointerCapture(event.pointerId)
+    scrubToClientX(event.clientX)
+  }
+
+  function onScrubPointerMove(event: PointerEvent<HTMLDivElement>) {
+    if (!isScrubbingRef.current) return
+    scrubToClientX(event.clientX)
+  }
+
+  function onScrubPointerUp(event: PointerEvent<HTMLDivElement>) {
+    if (!isScrubbingRef.current) return
+    isScrubbingRef.current = false
+    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+      event.currentTarget.releasePointerCapture(event.pointerId)
+    }
+  }
+
   function goPrev() {
     setActiveShot((prev) => (prev - 1 + total) % total)
   }
@@ -183,18 +223,31 @@ function PhoneCarousel({
         </div>
 
         <div
-          className={`mx-auto mt-2.5 h-1 w-[72%] overflow-hidden rounded-full bg-teal/15 transition-opacity duration-300 ${
-            scrollMetrics.canScroll ? 'opacity-100' : 'opacity-0'
+          ref={scrubRef}
+          role="scrollbar"
+          aria-orientation="horizontal"
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-valuenow={Math.round(scrollMetrics.progress * 100)}
+          aria-label={`${title} ${screenshotLabel} scroll`}
+          tabIndex={scrollMetrics.canScroll ? 0 : -1}
+          onPointerDown={onScrubPointerDown}
+          onPointerMove={onScrubPointerMove}
+          onPointerUp={onScrubPointerUp}
+          onPointerCancel={onScrubPointerUp}
+          className={`mx-auto mt-2 flex h-5 w-[72%] cursor-grab items-center touch-none active:cursor-grabbing transition-opacity duration-300 ${
+            scrollMetrics.canScroll ? 'opacity-100' : 'pointer-events-none opacity-0'
           }`}
-          aria-hidden
         >
-          <div
-            className="h-full rounded-full bg-gradient-to-r from-teal/70 via-coral to-teal shadow-[0_0_10px_rgb(0_171_240_/_0.55)] transition-[margin,width] duration-150 ease-out"
-            style={{
-              width: `${thumbWidthPercent}%`,
-              marginLeft: `${thumbOffsetPercent}%`,
-            }}
-          />
+          <div className="relative h-1.5 w-full overflow-hidden rounded-full bg-teal/15">
+            <div
+              className="absolute top-0 h-full rounded-full bg-gradient-to-r from-teal/70 via-coral to-teal shadow-[0_0_10px_rgb(0_171_240_/_0.55)]"
+              style={{
+                width: `${thumbWidthPercent}%`,
+                left: `${thumbOffsetPercent}%`,
+              }}
+            />
+          </div>
         </div>
       </div>
 
