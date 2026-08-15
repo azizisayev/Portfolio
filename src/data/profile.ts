@@ -31,7 +31,7 @@ export const profile = {
   } satisfies PhoneParts,
   location: 'Azerbaycan',
   socials: {
-    linkedin: 'https://www.linkedin.com/in/eziz-isayev-685587204',
+    linkedin: 'https://www.linkedin.com/in/eziz-isayev-685587',
   },
 } as const
 
