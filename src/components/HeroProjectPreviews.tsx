@@ -21,15 +21,15 @@ const MiniPhone = memo(function MiniPhone({
   index,
 }: MiniPhoneProps) {
   const tilt = index === 0 ? -8 : index === 1 ? 2 : 10
-  const lift = index === 0 ? 18 : index === 1 ? 0 : 12
+  const lift = index === 0 ? 8 : index === 1 ? 0 : 6
 
   return (
     <motion.a
       href={href}
-      initial={{ opacity: 0, y: 36, rotate: tilt - 4 }}
+      initial={{ opacity: 0, y: 28, rotate: tilt - 4 }}
       animate={{ opacity: 1, y: lift, rotate: tilt }}
       transition={{ duration: 0.55, delay: 0.35 + index * 0.1, ease: 'easeOut' }}
-      whileHover={{ y: lift - 10, scale: 1.04, zIndex: 20 }}
+      whileHover={{ y: lift - 8, scale: 1.04, zIndex: 20 }}
       className="group relative block w-[92px] shrink-0 sm:w-[112px] md:w-[128px] lg:w-[142px]"
       style={{ zIndex: 10 - index }}
       aria-label={title}
@@ -80,8 +80,8 @@ export function HeroProjectPreviews() {
     .filter((item) => Boolean(item.src))
 
   return (
-    <div className="pointer-events-none absolute inset-x-0 bottom-16 z-20 flex justify-center px-4 md:inset-y-0 md:bottom-auto md:right-6 md:left-auto md:items-center md:justify-end md:px-0 lg:right-10 xl:right-[max(2.5rem,calc((100vw-72rem)/2))]">
-      <div className="pointer-events-auto flex items-end gap-2 sm:gap-3 md:-translate-y-6 md:-space-x-6 md:gap-0 lg:-translate-y-8 lg:-space-x-8">
+    <div className="pointer-events-none absolute inset-x-0 bottom-16 z-20 flex justify-center px-4 md:inset-y-0 md:bottom-auto md:right-6 md:left-auto md:flex md:items-center md:justify-end md:px-0 lg:right-10 xl:right-[max(2.5rem,calc((100vw-72rem)/2))]">
+      <div className="pointer-events-auto flex items-end gap-2 sm:gap-3 md:-space-x-6 md:gap-0 lg:-space-x-8">
         {previews.map((preview, index) => (
           <MiniPhone
             key={preview.id}
