@@ -360,11 +360,12 @@ function ProjectCard({ project, index }: ProjectCardProps) {
 
   return (
     <motion.article
+      id={`project-${project.id}`}
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-80px' }}
       transition={{ duration: 0.55, delay: index * 0.06 }}
-      className={`grid items-start gap-10 lg:grid-cols-2 lg:gap-14 ${
+      className={`scroll-mt-28 grid items-start gap-10 lg:grid-cols-2 lg:gap-14 ${
         isReversed ? 'lg:[&>*:first-child]:order-2' : ''
       }`}
     >

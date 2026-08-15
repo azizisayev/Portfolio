@@ -4,6 +4,7 @@ import { buildEmailAddress, buildWhatsAppUrl, profile } from '../data/profile'
 import { useLocale } from '../i18n/locale-context'
 import { getUi } from '../i18n/ui'
 import { HeroBackground } from './HeroBackground'
+import { HeroProjectPreviews } from './HeroProjectPreviews'
 import { LinkedInIcon } from './LinkedInIcon'
 
 const iconBtnClass =
@@ -24,7 +25,7 @@ export function Hero() {
     <section id="ust" className="relative min-h-svh overflow-hidden">
       <HeroBackground />
 
-      <div className="relative z-10 mx-auto flex min-h-svh max-w-6xl items-center px-5 pb-16 pt-28 md:px-8">
+      <div className="relative z-10 mx-auto flex min-h-svh max-w-6xl items-center px-5 pb-36 pt-28 md:px-8 md:pb-16">
         <div className="relative max-w-2xl">
           <motion.p
             key={`greet-${locale}`}
@@ -114,6 +115,8 @@ export function Hero() {
           </motion.div>
         </div>
       </div>
+
+      <HeroProjectPreviews />
     </section>
   )
 }
