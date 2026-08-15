@@ -5,10 +5,17 @@ import {
   useSpring,
   useTransform,
 } from 'framer-motion'
-import { useEffect } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
-const floatingDots = [
-  // right side
+interface FloatingDot {
+  readonly left: string
+  readonly top: string
+  readonly size: number
+  readonly delay: number
+  readonly duration: number
+}
+
+const rightDots: FloatingDot[] = [
   { left: '52%', top: '16%', size: 5, delay: 0, duration: 4.2 },
   { left: '62%', top: '22%', size: 4, delay: 0.4, duration: 3.8 },
   { left: '74%', top: '14%', size: 6, delay: 0.8, duration: 5.1 },
@@ -27,7 +34,9 @@ const floatingDots = [
   { left: '48%', top: '44%', size: 4, delay: 1.2, duration: 5.2 },
   { left: '92%', top: '56%', size: 3, delay: 0.5, duration: 3.4 },
   { left: '56%', top: '88%', size: 4, delay: 1.5, duration: 4.9 },
-  // left side
+]
+
+const leftDots: FloatingDot[] = [
   { left: '6%', top: '18%', size: 4, delay: 0.3, duration: 4.0 },
   { left: '14%', top: '28%', size: 5, delay: 0.9, duration: 4.6 },
   { left: '22%', top: '16%', size: 3, delay: 1.5, duration: 3.7 },
@@ -79,13 +88,69 @@ const floatingDots = [
   { left: '25%', top: '14%', size: 3, delay: 0.3, duration: 5.0 },
   { left: '38%', top: '26%', size: 4, delay: 1.0, duration: 4.2 },
   { left: '37%', top: '56%', size: 3, delay: 1.6, duration: 3.8 },
-] as const
+  // denser left fill
+  { left: '0%', top: '22%', size: 3, delay: 0.2, duration: 4.1 },
+  { left: '5%', top: '32%', size: 4, delay: 0.8, duration: 3.7 },
+  { left: '13%', top: '4%', size: 3, delay: 1.4, duration: 5.0 },
+  { left: '21%', top: '30%', size: 5, delay: 0.5, duration: 4.4 },
+  { left: '30%', top: '4%', size: 4, delay: 1.1, duration: 3.9 },
+  { left: '39%', top: '14%', size: 3, delay: 1.7, duration: 4.8 },
+  { left: '0%', top: '48%', size: 4, delay: 0.3, duration: 4.2 },
+  { left: '7%', top: '38%', size: 3, delay: 0.9, duration: 5.1 },
+  { left: '15%', top: '28%', size: 5, delay: 1.5, duration: 3.6 },
+  { left: '24%', top: '42%', size: 4, delay: 0.1, duration: 4.5 },
+  { left: '33%', top: '40%', size: 3, delay: 0.7, duration: 4.0 },
+  { left: '40%', top: '44%', size: 4, delay: 1.3, duration: 5.2 },
+  { left: '1%', top: '60%', size: 3, delay: 1.9, duration: 3.8 },
+  { left: '10%', top: '54%', size: 5, delay: 0.4, duration: 4.6 },
+  { left: '18%', top: '62%', size: 4, delay: 1.0, duration: 4.1 },
+  { left: '27%', top: '52%', size: 3, delay: 1.6, duration: 5.0 },
+  { left: '35%', top: '68%', size: 4, delay: 0.6, duration: 3.5 },
+  { left: '41%', top: '60%', size: 3, delay: 1.2, duration: 4.7 },
+  { left: '3%', top: '86%', size: 4, delay: 0.8, duration: 4.3 },
+  { left: '12%', top: '92%', size: 3, delay: 1.4, duration: 3.9 },
+  { left: '20%', top: '80%', size: 5, delay: 0.2, duration: 5.1 },
+  { left: '29%', top: '96%', size: 4, delay: 0.9, duration: 4.4 },
+  { left: '38%', top: '88%', size: 3, delay: 1.5, duration: 3.7 },
+  { left: '42%', top: '34%', size: 4, delay: 0.5, duration: 4.9 },
+  { left: '43%', top: '72%', size: 3, delay: 1.1, duration: 4.2 },
+]
+
+/**
+ * Picks a lighter subset of dots for mobile / reduced-motion.
+ */
+function pickDots(dots: FloatingDot[], limit: number): FloatingDot[] {
+  if (dots.length <= limit) return dots
+  const step = dots.length / limit
+  return Array.from({ length: limit }, (_, index) => dots[Math.floor(index * step)]!)
+}
 
 /**
  * Hero arka planı — ışık huzmeleri, mesh glow, hexagon ve yoğun noktalar.
  */
 export function HeroBackground() {
   const prefersReducedMotion = useReducedMotion()
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const media = window.matchMedia('(max-width: 767px)')
+    function sync() {
+      setIsMobile(media.matches)
+    }
+    sync()
+    media.addEventListener('change', sync)
+    return () => media.removeEventListener('change', sync)
+  }, [])
+
+  const visibleDots = useMemo(() => {
+    if (prefersReducedMotion) {
+      return [...pickDots(leftDots, 10), ...pickDots(rightDots, 6)]
+    }
+    if (isMobile) {
+      return [...pickDots(leftDots, 22), ...pickDots(rightDots, 10)]
+    }
+    return [...leftDots, ...rightDots]
+  }, [isMobile, prefersReducedMotion])
 
   const mx = useMotionValue(72)
   const my = useMotionValue(42)
@@ -95,7 +160,7 @@ export function HeroBackground() {
   const top = useTransform(sy, (value) => `${value}%`)
 
   useEffect(() => {
-    if (prefersReducedMotion) return undefined
+    if (prefersReducedMotion || isMobile) return undefined
 
     function onMove(event: MouseEvent) {
       mx.set((event.clientX / window.innerWidth) * 100)
@@ -104,7 +169,7 @@ export function HeroBackground() {
 
     window.addEventListener('mousemove', onMove, { passive: true })
     return () => window.removeEventListener('mousemove', onMove)
-  }, [mx, my, prefersReducedMotion])
+  }, [isMobile, mx, my, prefersReducedMotion])
 
   return (
     <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
@@ -172,10 +237,9 @@ export function HeroBackground() {
         <div className="absolute inset-[18%] border border-teal/50" style={{ clipPath: 'inherit' }} />
       </motion.div>
 
-      {/* Floating + orbiting dots */}
-      {floatingDots.map((dot) => (
+      {visibleDots.map((dot) => (
         <motion.span
-          key={`${dot.left}-${dot.top}`}
+          key={`${dot.left}-${dot.top}-${dot.size}`}
           className="absolute rounded-full bg-teal max-md:opacity-70"
           style={{
             left: dot.left,
@@ -202,7 +266,7 @@ export function HeroBackground() {
         />
       ))}
 
-      {!prefersReducedMotion ? (
+      {!prefersReducedMotion && !isMobile ? (
         <>
           <motion.div
             className="absolute right-[18%] top-[34%] h-56 w-56 max-md:right-[10%] max-md:h-40 max-md:w-40"
@@ -240,15 +304,17 @@ export function HeroBackground() {
         transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut' }}
       />
 
-      <motion.div
-        className="absolute h-[46vw] w-[46vw] max-h-[560px] max-w-[560px] -translate-x-1/2 -translate-y-1/2 rounded-full"
-        style={{
-          left,
-          top,
-          background:
-            'radial-gradient(circle, rgb(0 171 240 / 0.32) 0%, rgb(0 171 240 / 0.1) 42%, transparent 70%)',
-        }}
-      />
+      {!isMobile && !prefersReducedMotion ? (
+        <motion.div
+          className="absolute h-[46vw] w-[46vw] max-h-[560px] max-w-[560px] -translate-x-1/2 -translate-y-1/2 rounded-full"
+          style={{
+            left,
+            top,
+            background:
+              'radial-gradient(circle, rgb(0 171 240 / 0.32) 0%, rgb(0 171 240 / 0.1) 42%, transparent 70%)',
+          }}
+        />
+      ) : null}
 
       <div className="absolute inset-0 bg-gradient-to-r from-foam via-foam/75 to-foam/20" />
       <div className="absolute inset-0 bg-gradient-to-t from-foam via-transparent to-foam/45" />
