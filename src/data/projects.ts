@@ -49,7 +49,7 @@ export const projects: Project[] = [
     id: 'galata',
     title: 'Galata',
     tags: ['Expo', 'React Native', 'TypeScript', 'Supabase', 'RU · EN · TR'],
-    screenshots: shotPaths('galata', 38),
+    screenshots: shotPaths('galata', 37),
     featured: true,
     accent: '#c45c26',
     copy: {
