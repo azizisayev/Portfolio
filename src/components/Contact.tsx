@@ -1,10 +1,10 @@
 import { motion } from 'framer-motion'
-import { Link2 } from 'lucide-react'
 import { profile } from '../data/profile'
 import { useLocale } from '../i18n/locale-context'
 import { getUi } from '../i18n/ui'
 import { ProtectedEmailButton } from './ProtectedEmailButton'
 import { ContactChannels } from './ContactChannels'
+import { LinkedInIcon } from './LinkedInIcon'
 
 /**
  * İletişim bölümü.
@@ -43,7 +43,7 @@ export function Contact() {
                 rel="noreferrer"
                 className="inline-flex items-center gap-2 rounded-lg border-2 border-teal/50 bg-transparent px-5 py-3 text-sm font-semibold text-teal transition hover:bg-teal hover:text-foam"
               >
-                <Link2 size={18} />
+                <LinkedInIcon size={18} />
                 LinkedIn
               </a>
             </div>

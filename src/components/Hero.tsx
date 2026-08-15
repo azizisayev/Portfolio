@@ -1,9 +1,10 @@
 import { motion } from 'framer-motion'
-import { Link2, Mail, MessageCircle } from 'lucide-react'
+import { Mail, MessageCircle } from 'lucide-react'
 import { buildEmailAddress, buildWhatsAppUrl, profile } from '../data/profile'
 import { useLocale } from '../i18n/locale-context'
 import { getUi } from '../i18n/ui'
 import { HeroBackground } from './HeroBackground'
+import { LinkedInIcon } from './LinkedInIcon'
 
 const iconBtnClass =
   'inline-flex h-11 w-11 items-center justify-center rounded-full border-2 border-teal text-teal transition hover:bg-teal hover:text-foam'
@@ -100,7 +101,7 @@ export function Hero() {
               aria-label="LinkedIn"
               className={iconBtnClass}
             >
-              <Link2 size={18} />
+              <LinkedInIcon size={18} />
             </a>
             <button
               type="button"
