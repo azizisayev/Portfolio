@@ -28,6 +28,26 @@ const rightDots: FloatingDot[] = [
   { left: '48%', top: '44%', size: 4, delay: 1.2, duration: 5.2 },
   { left: '92%', top: '56%', size: 3, delay: 0.5, duration: 3.4 },
   { left: '56%', top: '88%', size: 4, delay: 1.5, duration: 4.9 },
+  { left: '50%', top: '10%', size: 4, delay: 0.3, duration: 4.0 },
+  { left: '68%', top: '8%', size: 3, delay: 1.0, duration: 5.2 },
+  { left: '86%', top: '12%', size: 5, delay: 1.6, duration: 3.7 },
+  { left: '96%', top: '22%', size: 3, delay: 0.7, duration: 4.4 },
+  { left: '46%', top: '28%', size: 4, delay: 1.2, duration: 3.9 },
+  { left: '64%', top: '32%', size: 5, delay: 0.1, duration: 5.0 },
+  { left: '76%', top: '34%', size: 3, delay: 0.9, duration: 4.1 },
+  { left: '94%', top: '44%', size: 4, delay: 1.4, duration: 3.6 },
+  { left: '50%', top: '62%', size: 3, delay: 0.4, duration: 4.7 },
+  { left: '68%', top: '68%', size: 5, delay: 1.1, duration: 4.3 },
+  { left: '86%', top: '74%', size: 4, delay: 1.8, duration: 5.1 },
+  { left: '98%', top: '64%', size: 3, delay: 0.6, duration: 3.8 },
+  { left: '52%', top: '78%', size: 4, delay: 1.3, duration: 4.5 },
+  { left: '74%', top: '86%', size: 5, delay: 0.2, duration: 4.0 },
+  { left: '90%', top: '90%', size: 3, delay: 0.8, duration: 5.3 },
+  { left: '48%', top: '94%', size: 4, delay: 1.7, duration: 3.5 },
+  { left: '62%', top: '96%', size: 3, delay: 0.5, duration: 4.8 },
+  { left: '80%', top: '52%', size: 4, delay: 1.0, duration: 4.2 },
+  { left: '44%', top: '18%', size: 5, delay: 1.5, duration: 3.9 },
+  { left: '58%', top: '48%', size: 3, delay: 0.3, duration: 5.0 },
 ]
 
 const leftDots: FloatingDot[] = [
@@ -108,6 +128,22 @@ const leftDots: FloatingDot[] = [
   { left: '38%', top: '88%', size: 3, delay: 1.5, duration: 3.7 },
   { left: '42%', top: '34%', size: 4, delay: 0.5, duration: 4.9 },
   { left: '43%', top: '72%', size: 3, delay: 1.1, duration: 4.2 },
+  { left: '0%', top: '8%', size: 4, delay: 0.4, duration: 4.0 },
+  { left: '4%', top: '40%', size: 3, delay: 1.0, duration: 5.1 },
+  { left: '10%', top: '26%', size: 5, delay: 1.6, duration: 3.7 },
+  { left: '18%', top: '36%', size: 4, delay: 0.2, duration: 4.5 },
+  { left: '26%', top: '56%', size: 3, delay: 0.8, duration: 4.1 },
+  { left: '32%', top: '70%', size: 5, delay: 1.4, duration: 3.9 },
+  { left: '40%', top: '82%', size: 4, delay: 0.6, duration: 5.0 },
+  { left: '2%', top: '90%', size: 3, delay: 1.2, duration: 4.3 },
+  { left: '8%', top: '98%', size: 4, delay: 1.8, duration: 3.6 },
+  { left: '16%', top: '70%', size: 3, delay: 0.3, duration: 4.8 },
+  { left: '22%', top: '88%', size: 5, delay: 0.9, duration: 4.2 },
+  { left: '28%', top: '18%', size: 4, delay: 1.5, duration: 3.8 },
+  { left: '34%', top: '10%', size: 3, delay: 0.1, duration: 5.2 },
+  { left: '42%', top: '50%', size: 5, delay: 0.7, duration: 4.4 },
+  { left: '44%', top: '20%', size: 3, delay: 1.3, duration: 4.0 },
+  { left: '45%', top: '64%', size: 4, delay: 1.9, duration: 3.5 },
 ]
 
 /**
@@ -138,10 +174,10 @@ export function HeroBackground() {
 
   const visibleDots = useMemo(() => {
     if (prefersReducedMotion) {
-      return [...pickDots(leftDots, 10), ...pickDots(rightDots, 6)]
+      return [...pickDots(leftDots, 14), ...pickDots(rightDots, 10)]
     }
     if (isMobile) {
-      return [...pickDots(leftDots, 22), ...pickDots(rightDots, 10)]
+      return [...pickDots(leftDots, 28), ...pickDots(rightDots, 16)]
     }
     return [...leftDots, ...rightDots]
   }, [isMobile, prefersReducedMotion])

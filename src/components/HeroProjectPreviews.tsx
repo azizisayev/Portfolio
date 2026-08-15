@@ -31,7 +31,7 @@ const MiniPhone = memo(function MiniPhone({
       animate={{ opacity: 1, y: lift, rotate: tilt }}
       transition={{ duration: 0.45, delay: 0.35 + index * 0.1, ease: 'easeOut' }}
       whileHover={{ y: lift - 10, zIndex: 30 }}
-      className="group relative block w-[92px] shrink-0 sm:w-[112px] md:w-[120px] lg:w-[138px]"
+      className="group relative block w-[108px] shrink-0 sm:w-[128px] md:w-[148px] lg:w-[168px]"
       style={{ zIndex: 10 - index }}
       aria-label={title}
     >
@@ -82,7 +82,7 @@ export function HeroProjectPreviews() {
 
   return (
     <div className="relative z-20 flex w-full justify-center overflow-visible md:w-auto md:shrink-0 md:justify-end">
-      <div className="flex items-end gap-2 overflow-visible sm:gap-3 md:-space-x-5 md:gap-0 lg:-space-x-7">
+      <div className="flex items-end gap-2 overflow-visible sm:gap-3 md:-space-x-6 md:gap-0 lg:-space-x-8">
         {previews.map((preview, index) => (
           <MiniPhone
             key={preview.id}
