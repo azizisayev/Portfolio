@@ -30,7 +30,7 @@ const MiniPhone = memo(function MiniPhone({
       animate={{ opacity: 1, y: lift, rotate: tilt }}
       transition={{ duration: 0.55, delay: 0.35 + index * 0.1, ease: 'easeOut' }}
       whileHover={{ y: lift - 8, scale: 1.04, zIndex: 20 }}
-      className="group relative block w-[92px] shrink-0 sm:w-[112px] md:w-[128px] lg:w-[142px]"
+      className="group relative block w-[92px] shrink-0 sm:w-[112px] md:w-[120px] lg:w-[138px]"
       style={{ zIndex: 10 - index }}
       aria-label={title}
     >
@@ -66,7 +66,8 @@ const MiniPhone = memo(function MiniPhone({
 })
 
 /**
- * Ana ekran sağ alt — 3 projenin ilk screenshot iPhone önizlemesi.
+ * Hero sağ taraf — 3 projenin ilk screenshot iPhone önizlemesi.
+ * Sol metin bloğuyla aynı satırda hizalanır.
  */
 export function HeroProjectPreviews() {
   const previews = projects
@@ -80,8 +81,8 @@ export function HeroProjectPreviews() {
     .filter((item) => Boolean(item.src))
 
   return (
-    <div className="pointer-events-none absolute inset-x-0 bottom-16 z-20 flex justify-center px-4 md:inset-y-0 md:bottom-auto md:right-6 md:left-auto md:flex md:items-center md:justify-end md:px-0 lg:right-10 xl:right-[max(2.5rem,calc((100vw-72rem)/2))]">
-      <div className="pointer-events-auto flex items-end gap-2 sm:gap-3 md:-space-x-6 md:gap-0 lg:-space-x-8">
+    <div className="relative z-20 flex w-full justify-center md:w-auto md:shrink-0 md:justify-end">
+      <div className="flex items-end gap-2 sm:gap-3 md:-space-x-5 md:gap-0 lg:-space-x-7">
         {previews.map((preview, index) => (
           <MiniPhone
             key={preview.id}

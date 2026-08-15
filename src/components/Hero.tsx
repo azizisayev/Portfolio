@@ -25,8 +25,8 @@ export function Hero() {
     <section id="ust" className="relative min-h-svh overflow-hidden">
       <HeroBackground />
 
-      <div className="relative z-10 mx-auto flex min-h-svh max-w-6xl items-center px-5 pb-40 pt-28 md:px-8 md:pb-16">
-        <div className="relative max-w-2xl">
+      <div className="relative z-10 mx-auto flex min-h-svh max-w-6xl flex-col items-center justify-center gap-10 px-5 pb-16 pt-28 md:flex-row md:items-center md:justify-between md:gap-8 md:px-8 md:pb-16">
+        <div className="relative w-full max-w-2xl shrink-0 md:max-w-[48%]">
           <motion.p
             key={`greet-${locale}`}
             initial={{ opacity: 0, y: 16 }}
@@ -114,9 +114,9 @@ export function Hero() {
             </button>
           </motion.div>
         </div>
-      </div>
 
-      <HeroProjectPreviews />
+        <HeroProjectPreviews />
+      </div>
     </section>
   )
 }
