@@ -366,8 +366,8 @@ export const projects: Project[] = [
       `${import.meta.env.BASE_URL}screenshots/converter/05.jpg`,
       `${import.meta.env.BASE_URL}screenshots/converter/07.jpg`,
     ],
-    featured: false,
-    accent: '#1a6cff',
+    featured: true,
+    accent: '#F26B1D',
     copy: {
       en: {
         tagline: 'Live currency, crypto, and unit conversions with a scene-based calculator UI.',
