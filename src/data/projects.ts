@@ -359,12 +359,12 @@ export const projects: Project[] = [
     tags: ['Expo', 'React Native', 'TypeScript', '13 languages'],
     screenshots: [
       `${import.meta.env.BASE_URL}screenshots/converter/06.jpg`,
-      `${import.meta.env.BASE_URL}screenshots/converter/01.jpg`,
       `${import.meta.env.BASE_URL}screenshots/converter/02.jpg`,
       `${import.meta.env.BASE_URL}screenshots/converter/03.jpg`,
       `${import.meta.env.BASE_URL}screenshots/converter/04.jpg`,
       `${import.meta.env.BASE_URL}screenshots/converter/05.jpg`,
       `${import.meta.env.BASE_URL}screenshots/converter/07.jpg`,
+      `${import.meta.env.BASE_URL}screenshots/converter/01.jpg`,
     ],
     featured: true,
     accent: '#F26B1D',
