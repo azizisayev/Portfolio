@@ -18,6 +18,7 @@ export const projectSchema = z.object({
   title: z.string(),
   tags: z.array(z.string()),
   screenshots: z.array(z.string()),
+  logo: z.string(),
   featured: z.boolean().default(false),
   accent: z.string(),
   copy: z.object({
@@ -50,6 +51,7 @@ export const projects: Project[] = [
     title: 'Galata',
     tags: ['Expo', 'React Native', 'TypeScript', 'Supabase', 'RU · EN · TR'],
     screenshots: shotPaths('galata', 37),
+    logo: `${base}logos/galata.png`,
     featured: true,
     accent: '#c45c26',
     copy: {
@@ -232,6 +234,7 @@ export const projects: Project[] = [
     title: 'SimplyDo',
     tags: ['Expo', 'React Native', 'TypeScript', 'Supabase', '13+ languages'],
     screenshots: shotPaths('simplydo', 10),
+    logo: `${base}logos/simplydo.png`,
     featured: true,
     accent: '#0d9f8c',
     copy: {
@@ -358,6 +361,7 @@ export const projects: Project[] = [
     title: 'Converto',
     tags: ['Expo', 'React Native', 'TypeScript', 'iOS · Android', '13 languages'],
     screenshots: shotPaths('converter', 18),
+    logo: `${base}logos/converter.png`,
     featured: true,
     accent: '#F26B1D',
     copy: {
