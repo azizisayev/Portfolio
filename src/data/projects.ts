@@ -359,15 +359,15 @@ export const projects: Project[] = [
     tags: ['Expo', 'React Native', 'TypeScript', 'iOS · Android', '13 languages'],
     screenshots: [
       `${import.meta.env.BASE_URL}screenshots/converter/06.jpg`,
-      `${import.meta.env.BASE_URL}screenshots/converter/01.jpg`,
       `${import.meta.env.BASE_URL}screenshots/converter/02.jpg`,
       `${import.meta.env.BASE_URL}screenshots/converter/03.jpg`,
       `${import.meta.env.BASE_URL}screenshots/converter/04.jpg`,
       `${import.meta.env.BASE_URL}screenshots/converter/05.jpg`,
       `${import.meta.env.BASE_URL}screenshots/converter/07.jpg`,
+      `${import.meta.env.BASE_URL}screenshots/converter/01.jpg`,
     ],
-    featured: false,
-    accent: '#1a6cff',
+    featured: true,
+    accent: '#F26B1D',
     copy: {
       en: {
         tagline: 'A currency, crypto, and unit converter for iOS and Android.',
