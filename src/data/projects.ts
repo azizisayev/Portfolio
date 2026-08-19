@@ -357,15 +357,7 @@ export const projects: Project[] = [
     id: 'converter',
     title: 'Converto',
     tags: ['Expo', 'React Native', 'TypeScript', 'iOS · Android', '13 languages'],
-    screenshots: [
-      `${import.meta.env.BASE_URL}screenshots/converter/06.jpg`,
-      `${import.meta.env.BASE_URL}screenshots/converter/02.jpg`,
-      `${import.meta.env.BASE_URL}screenshots/converter/03.jpg`,
-      `${import.meta.env.BASE_URL}screenshots/converter/04.jpg`,
-      `${import.meta.env.BASE_URL}screenshots/converter/05.jpg`,
-      `${import.meta.env.BASE_URL}screenshots/converter/07.jpg`,
-      `${import.meta.env.BASE_URL}screenshots/converter/01.jpg`,
-    ],
+    screenshots: shotPaths('converter', 18),
     featured: true,
     accent: '#F26B1D',
     copy: {
