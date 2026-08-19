@@ -403,6 +403,7 @@ function ProjectCard({ project, index }: ProjectCardProps) {
           {project.featured ? ui.featured : ui.project}
         </p>
         <h3 className="mt-1 flex items-center gap-3 font-display text-3xl font-bold tracking-tight text-ink md:gap-3.5 md:text-4xl">
+          <span>{project.title}</span>
           <img
             src={project.logo}
             alt=""
@@ -410,7 +411,6 @@ function ProjectCard({ project, index }: ProjectCardProps) {
             height={48}
             className="h-11 w-11 shrink-0 rounded-2xl object-cover shadow-[0_8px_20px_-10px_rgb(0_0_0_/_0.65)] ring-1 ring-white/10 md:h-12 md:w-12"
           />
-          <span>{project.title}</span>
         </h3>
         <p className="mt-3 text-lg font-medium text-teal">{copy.tagline}</p>
         <p className="mt-4 text-base leading-relaxed text-muted">{copy.blurb}</p>
