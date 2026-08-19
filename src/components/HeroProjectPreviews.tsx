@@ -47,6 +47,13 @@ const MiniPhone = memo(function MiniPhone({
           } as CSSProperties
         }
       >
+        <img
+          src={logo}
+          alt=""
+          width={36}
+          height={36}
+          className="absolute left-1/2 top-0 z-20 h-8 w-8 -translate-x-1/2 -translate-y-[58%] rounded-[0.7rem] object-cover shadow-[0_8px_16px_-6px_rgb(0_0_0_/_0.75)] ring-1 ring-white/25 sm:h-9 sm:w-9 md:h-10 md:w-10"
+        />
         <div className="rounded-[1.25rem] bg-[#121214] p-[5px]">
           <div className="relative aspect-[9/19.5] overflow-hidden rounded-[1.05rem] bg-black">
             <img
@@ -57,13 +64,6 @@ const MiniPhone = memo(function MiniPhone({
               decoding="async"
             />
             <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-black/20" />
-            <img
-              src={logo}
-              alt=""
-              width={32}
-              height={32}
-              className="absolute left-1/2 top-2 z-10 h-7 w-7 -translate-x-1/2 rounded-[0.55rem] object-cover shadow-[0_6px_14px_-6px_rgb(0_0_0_/_0.8)] ring-1 ring-white/25 sm:top-2.5 sm:h-8 sm:w-8 md:h-9 md:w-9 lg:h-10 lg:w-10"
-            />
           </div>
         </div>
       </div>
