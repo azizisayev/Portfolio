@@ -5,6 +5,7 @@ import { projects } from '../data/projects'
 interface MiniPhoneProps {
   title: string
   src: string
+  logo: string
   href: string
   accent: string
   index: number
@@ -17,6 +18,7 @@ interface MiniPhoneProps {
 const MiniPhone = memo(function MiniPhone({
   title,
   src,
+  logo,
   href,
   accent,
   index,
@@ -55,6 +57,13 @@ const MiniPhone = memo(function MiniPhone({
               decoding="async"
             />
             <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-black/20" />
+            <img
+              src={logo}
+              alt=""
+              width={32}
+              height={32}
+              className="absolute left-1/2 top-2 z-10 h-7 w-7 -translate-x-1/2 rounded-[0.55rem] object-cover shadow-[0_6px_14px_-6px_rgb(0_0_0_/_0.8)] ring-1 ring-white/25 sm:top-2.5 sm:h-8 sm:w-8 md:h-9 md:w-9 lg:h-10 lg:w-10"
+            />
           </div>
         </div>
       </div>
@@ -76,6 +85,7 @@ export function HeroProjectPreviews() {
       title: project.title,
       accent: project.accent,
       src: project.screenshots[0],
+      logo: project.logo,
       href: `#project-${project.id}`,
     }))
     .filter((item) => Boolean(item.src))
@@ -88,6 +98,7 @@ export function HeroProjectPreviews() {
             key={preview.id}
             title={preview.title}
             src={preview.src!}
+            logo={preview.logo}
             href={preview.href}
             accent={preview.accent}
             index={index}
