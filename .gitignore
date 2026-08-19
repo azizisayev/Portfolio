@@ -23,9 +23,13 @@ dist-ssr
 *credentials*.json
 *firebase*adminsdk*.json
 *serviceAccount*.json
-AuthKey*.p8
-secrets/
-.secrets/
+google-services.json
+GoogleService-Info.plist
+*.keystore
+*.jks
+*.mobileprovision
+*.p12
+*.pfx
 
 # Editor directories and files
 .vscode/*

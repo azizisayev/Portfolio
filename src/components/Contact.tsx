@@ -40,7 +40,7 @@ export function Contact() {
               <a
                 href={profile.socials.linkedin}
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 rounded-lg border-2 border-teal/50 bg-transparent px-5 py-3 text-sm font-semibold text-teal transition hover:bg-teal hover:text-foam"
               >
                 <LinkedInIcon size={18} />

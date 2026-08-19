@@ -13,6 +13,13 @@ const phonePartsSchema = z.object({
 export type EmailParts = z.infer<typeof emailPartsSchema>
 export type PhoneParts = z.infer<typeof phonePartsSchema>
 
+/**
+ * Düz metin sızıntısını azaltmak için karakter kodlarından string üretir.
+ */
+function decodeOpaque(codes: readonly number[]): string {
+  return String.fromCharCode(...codes)
+}
+
 /** Site genelinde kullanılan profil bilgileri. */
 export const profile = {
   name: 'Aziz',
@@ -21,8 +28,8 @@ export const profile = {
   bio: 'Mobil ve web tarafında TypeScript, React ve Expo ile ürün odaklı uygulamalar geliştiriyorum. Temiz arayüz, performans ve kullanıcı deneyimi önceliğim.',
   /** E-posta parçalı tutulur; HTML'de düz metin olarak görünmez. */
   emailParts: {
-    user: 'isayev_eziz',
-    domain: 'mail.ru',
+    user: decodeOpaque([105, 115, 97, 121, 101, 118, 95, 101, 122, 105, 122]),
+    domain: decodeOpaque([109, 97, 105, 108, 46, 114, 117]),
   } satisfies EmailParts,
   /** Telefon parçalı tutulur; tıklanınca birleştirilir. */
   phoneParts: {

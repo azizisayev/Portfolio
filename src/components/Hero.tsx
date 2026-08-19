@@ -89,7 +89,7 @@ export function Hero() {
             <a
               href={buildWhatsAppUrl(profile.phoneParts)}
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               aria-label="WhatsApp"
               className={iconBtnClass}
             >
@@ -98,7 +98,7 @@ export function Hero() {
             <a
               href={profile.socials.linkedin}
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               aria-label="LinkedIn"
               className={iconBtnClass}
             >
